@@ -163,6 +163,7 @@ app.post("/create-ticket", upload.array('fileUpload', 10), async (req, res) => {
           contactId: "1142108000000642254", // Set correct contact ID
           productId: "", // Can be updated if needed,
           teamId : team,
+          channel:"Web",
           // email : "test_dev@sun",
           priority : priority,
           cf: { // ✅ Add custom fields (cf)
