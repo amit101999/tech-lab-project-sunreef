@@ -140,7 +140,6 @@ app.post("/create-ticket", upload.array('fileUpload', 10), async (req, res) => {
   try {
       // Extract form data
       const { projectTitle,email, department, description, severity, team,projectCode,priority} = req.body;
-
       // Step 1: Create ticket in Zoho Desk
       const accessToken = await fetchAccessToken(); // Replace with your token
       if(!accessToken){
@@ -148,6 +147,7 @@ app.post("/create-ticket", upload.array('fileUpload', 10), async (req, res) => {
           "message" : "access token not found"
         })
       }
+
 
       console.log("generated token : ", accessToken);
       console.log("Team id : ", team);
@@ -194,7 +194,8 @@ app.post("/create-ticket", upload.array('fileUpload', 10), async (req, res) => {
               },
           }
       );
-
+      console.log("check files " , req.files)
+        
       console.log("ticket created");
       const ticketId = ticketResponse.data.id; // <-- Correct way to get the ticket ID
       const ticketNumber = ticketResponse.data.ticketNumber; // <-- This is the readable ticket number
