@@ -162,7 +162,7 @@ app.post("/create-ticket", upload.array('fileUpload', 10), async (req, res) => {
           category: "general", // Adjust category if needed
           contactId: "1142108000000642254", // Set correct contact ID
           productId: "", // Can be updated if needed,
-          teamId : team,
+          // teamId : team,
           channel:"Web",
           // email : "test_dev@sun",
           priority : priority,
@@ -177,7 +177,8 @@ app.post("/create-ticket", upload.array('fileUpload', 10), async (req, res) => {
               // cf_modelname: "F3 2017", 
               cf_project_code : projectCode,
               cf_severity : severity,
-              cf_ticket_generator : email
+              cf_ticket_generator : email,
+              cf_team_name : team
           },
       };
 
