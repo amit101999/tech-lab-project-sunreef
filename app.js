@@ -127,7 +127,7 @@ app.get("/get-users", async (req, res) => {
   }
 });
 
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ storage: multer.memoryStorage(), limits: {fileSize: 1024 * 1024 * 15} });
 
 app.get("/get-projectcode", async (req, res) => {
   try {
@@ -237,7 +237,6 @@ app.post("/create-ticket", upload.array("fileUpload", 10), async (req, res) => {
         },
       },
     );
-    console.log("check files ", req.files);
 
     console.log("ticket created");
     const ticketId = ticketResponse.data.id; // <-- Correct way to get the ticket ID
