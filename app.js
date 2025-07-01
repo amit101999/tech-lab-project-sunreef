@@ -15,6 +15,11 @@ app.use(bodyParser.json());
 // Global accessToken
 let accessToken;
 
+setInterval(async () => {
+      accessToken = await fetchAccessToken();
+}, 12 * 60 * 60 * 1000)  // 12 hours
+
+
 const PORT = process.env.PORT || 7000;
 // const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const ZOHO_CLIENT_ID = process.env.CLIENT_ID;
