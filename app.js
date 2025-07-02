@@ -95,6 +95,7 @@ async function fetchAccessToken() {
 app.get("/get-users", async (req, res) => {
   try {
     if (!accessToken) {
+          console.log("generating acess token " , accessToken);
       accessToken = await fetchAccessToken();
     }
     console.log("access Token: ", accessToken);
@@ -137,6 +138,7 @@ const upload = multer({ storage: multer.memoryStorage(), limits: {fileSize: 1024
 app.get("/get-projectcode", async (req, res) => {
   try {
     if (!accessToken) {
+           console.log("generating acess token in poject code " , accessToken);
       accessToken = await fetchAccessToken();
     }
     console.log("access Token: ", accessToken);
