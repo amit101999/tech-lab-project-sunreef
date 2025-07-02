@@ -17,7 +17,7 @@ let accessToken;
 
 setInterval(async () => {
       accessToken = await fetchAccessToken();
-}, 12 * 60 * 60 * 1000)  // 12 hours
+},  60 * 60 * 1000)  //generate accessToken after 1hr
 
 
 const PORT = process.env.PORT || 7000;
