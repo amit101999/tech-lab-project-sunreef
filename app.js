@@ -16,9 +16,8 @@ app.use(bodyParser.json());
 let accessToken;
 
 setInterval(async () => {
-      accessToken = await fetchAccessToken();
-},  60 * 60 * 1000)  //generate accessToken after 1hr
-
+  accessToken = await fetchAccessToken();
+}, 60 * 60 * 1000)  //generate accessToken after 1hr
 
 const PORT = process.env.PORT || 7000;
 // const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
@@ -31,41 +30,41 @@ const ZOHO_TOKEN_URL = process.env.ZOHO_TOKEN_URL ||
   "https://accounts.zoho.com/oauth/v2/token";
 const ZOHO_ORG_ID = process.env.ZOHO_ORG_ID;
 
-console.log("🔍 Loaded Environment Variables:");
-console.log("-------------------------------------------------");
-console.log(
-  "✅ PORT: ",
-  process.env.PORT ? "✅ Loaded" : "⚠️ Not Set (Using Default 3000)",
-);
-console.log(
-  "✅ OPENAI_API_KEY: ",
-  process.env.OPENAI_API_KEY ? "✅ Loaded" : "❌ NOT LOADED",
-);
-console.log(
-  "✅ ZOHO_CLIENT_ID: ",
-  process.env.ZOHO_CLIENT_ID ? "✅ Loaded" : "❌ NOT LOADED",
-);
-console.log(
-  "✅ ZOHO_CLIENT_SECRET: ",
-  process.env.ZOHO_CLIENT_SECRET ? "✅ Loaded" : "❌ NOT LOADED",
-);
-console.log(
-  "✅ ZOHO_REDIRECT_URI: ",
-  process.env.ZOHO_REDIRECT_URI ? "✅ Loaded" : "❌ NOT LOADED",
-);
-console.log(
-  "✅ ZOHO_REFRESH_TOKEN: ",
-  process.env.ZOHO_REFRESH_TOKEN ? "✅ Loaded" : "❌ NOT LOADED",
-);
-console.log(
-  "✅ ZOHO_TOKEN_URL: ",
-  process.env.ZOHO_TOKEN_URL ? "✅ Loaded" : "❌ NOT LOADED",
-);
-console.log(
-  "✅ ZOHO_ORG_ID: ",
-  process.env.ZOHO_ORG_ID ? "✅ Loaded" : "❌ NOT LOADED",
-);
-console.log("-------------------------------------------------");
+// console.log("🔍 Loaded Environment Variables:");
+// console.log("-------------------------------------------------");
+// console.log(
+//   "✅ PORT: ",
+//   process.env.PORT ? "✅ Loaded" : "⚠️ Not Set (Using Default 3000)",
+// );
+// console.log(
+//   "✅ OPENAI_API_KEY: ",
+//   process.env.OPENAI_API_KEY ? "✅ Loaded" : "❌ NOT LOADED",
+// );
+// console.log(
+//   "✅ ZOHO_CLIENT_ID: ",
+//   process.env.ZOHO_CLIENT_ID ? "✅ Loaded" : "❌ NOT LOADED",
+// );
+// console.log(
+//   "✅ ZOHO_CLIENT_SECRET: ",
+//   process.env.ZOHO_CLIENT_SECRET ? "✅ Loaded" : "❌ NOT LOADED",
+// );
+// console.log(
+//   "✅ ZOHO_REDIRECT_URI: ",
+//   process.env.ZOHO_REDIRECT_URI ? "✅ Loaded" : "❌ NOT LOADED",
+// );
+// console.log(
+//   "✅ ZOHO_REFRESH_TOKEN: ",
+//   process.env.ZOHO_REFRESH_TOKEN ? "✅ Loaded" : "❌ NOT LOADED",
+// );
+// console.log(
+//   "✅ ZOHO_TOKEN_URL: ",
+//   process.env.ZOHO_TOKEN_URL ? "✅ Loaded" : "❌ NOT LOADED",
+// );
+// console.log(
+//   "✅ ZOHO_ORG_ID: ",
+//   process.env.ZOHO_ORG_ID ? "✅ Loaded" : "❌ NOT LOADED",
+// );
+// console.log("-------------------------------------------------");
 
 // Route 1: Check if the server is running
 app.get("/", (req, res) => {
@@ -78,10 +77,10 @@ async function fetchAccessToken() {
     const url =
       `${ZOHO_TOKEN_URL}?grant_type=refresh_token&client_id=${ZOHO_CLIENT_ID}&client_secret=${ZOHO_CLIENT_SECRET}&redirect_uri=${ZOHO_REDIRECT_URI}&refresh_token=${ZOHO_REFRESH_TOKEN}`;
     const response = await axios.post(url);
-    console.log(response.data);
+    // console.log(response.data);
 
     if (response.data && response.data.access_token) {
-      console.log("access token generated: ", response.data.access_token);
+      // console.log("access token generated: ", response.data.access_token);
       return response.data.access_token;
     } else {
       throw new Error("Access token not found in the response.");
@@ -95,7 +94,7 @@ async function fetchAccessToken() {
 app.get("/get-users", async (req, res) => {
   try {
     if (!accessToken) {
-          console.log("generating acess token " , accessToken);
+      console.log("generating access token ", accessToken);
       accessToken = await fetchAccessToken();
     }
     console.log("access Token: ", accessToken);
@@ -122,7 +121,7 @@ app.get("/get-users", async (req, res) => {
 
     res.status(200).json(response.data);
   } catch (error) {
-    console.error("Full error object:", error);
+    // console.error("Full error object:", error);
     console.error(
       "Error details:",
       error.response
@@ -133,15 +132,18 @@ app.get("/get-users", async (req, res) => {
   }
 });
 
-const upload = multer({ storage: multer.memoryStorage(), limits: {fileSize: 1024 * 1024 * 15} });
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 1024 * 1024 * 15 },
+});
 
 app.get("/get-projectcode", async (req, res) => {
   try {
     if (!accessToken) {
-           console.log("generating acess token in poject code " , accessToken);
+      console.log("generating access token in project code ", accessToken);
       accessToken = await fetchAccessToken();
     }
-    console.log("access Token: ", accessToken);
+    // console.log("access Token: ", accessToken);
     // Replace with your token
     if (!accessToken) {
       return res.status(500).json({
@@ -164,7 +166,7 @@ app.get("/get-projectcode", async (req, res) => {
     );
     res.status(200).json(response.data);
   } catch (error) {
-    console.error("Full error object:", error);
+    // console.error("Full error object:", error);
     console.error(
       "Error details:",
       error.response
@@ -199,8 +201,8 @@ app.post("/create-ticket", upload.array("fileUpload", 10), async (req, res) => {
       });
     }
 
-    console.log("generated token : ", accessToken);
-    console.log("Team id : ", team);
+    // console.log("generated token : ", accessToken);
+    // console.log("Team id : ", team);
 
     // ✅ Correcting the ticketData format
     const ticketData = {
@@ -232,7 +234,7 @@ app.post("/create-ticket", upload.array("fileUpload", 10), async (req, res) => {
       },
     };
 
-    console.log("ticketData is : ", ticketData);
+    // console.log("ticketData is : ", ticketData);
 
     const ticketResponse = await axios.post(
       "https://desk.zoho.com/api/v1/tickets",
@@ -245,28 +247,28 @@ app.post("/create-ticket", upload.array("fileUpload", 10), async (req, res) => {
       },
     );
 
-    console.log("ticket created");
+    // console.log("ticket created");
     const ticketId = ticketResponse.data.id; // <-- Correct way to get the ticket ID
     const ticketNumber = ticketResponse.data.ticketNumber; // <-- This is the readable ticket number
 
-    console.log("✅ Ticket Created Successfully:");
-    console.log("Ticket ID:", ticketId);
-    console.log("Ticket Number:", ticketNumber);
+    // console.log("✅ Ticket Created Successfully:");
+    // console.log("Ticket ID:", ticketId);
+    // console.log("Ticket Number:", ticketNumber);
 
     // ✅ Step 1: Log access token before uploading
-    console.log("🔑 Using Access Token for Upload:", accessToken);
+    // console.log("🔑 Using Access Token for Upload:", accessToken);
 
     // ✅ Step 2: Ensure orgId is present
-    console.log("📌 Using orgId:", ZOHO_ORG_ID);
+    // console.log("📌 Using orgId:", ZOHO_ORG_ID);
     if (!ZOHO_ORG_ID) {
       throw new Error("❌ orgId is missing. Please check your .env file.");
     }
 
     if (!req.files || req.files.length === 0) {
-      console.log("⚠️ No files uploaded.");
+      // console.log("⚠️ No files uploaded.");
     } else {
       for (const file of req.files) {
-        console.log(`📁 Uploading File: ${file.originalname}`);
+        // console.log(`📁 Uploading File: ${file.originalname}`);
 
         const formData = new FormData();
         formData.append("file", file.buffer, { filename: file.originalname });
@@ -284,7 +286,7 @@ app.post("/create-ticket", upload.array("fileUpload", 10), async (req, res) => {
           },
         );
 
-        console.log(`✅ Uploaded: ${file.originalname}`);
+        // console.log(`✅ Uploaded: ${file.originalname}`);
       }
     }
 
